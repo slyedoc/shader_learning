@@ -12,7 +12,7 @@ use shader_learning::prelude::*;
 
 fn main() {
     App::new()
-        .add_plugin(AppEnvironmentPlugin)
+        .add_plugin(StandardEnviromentPlugin)
         .add_startup_system(setup.system())
         .run();
 }

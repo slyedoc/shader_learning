@@ -1,8 +1,9 @@
+
 use bevy::prelude::App;
-use shader_learning::AppEnvironmentPlugin;
+use shader_learning::StandardEnviromentPlugin;
 
 fn main() {
     App::new()
-        .add_plugin(AppEnvironmentPlugin)
+        .add_plugin(StandardEnviromentPlugin)
         .run();
 }

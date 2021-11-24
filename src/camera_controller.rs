@@ -1,4 +1,4 @@
-use bevy::{core::Time, input::{mouse::MouseMotion, Input}, math::{EulerRot, Quat, Vec2, Vec3}, prelude::{Added, EventReader, KeyCode, MouseButton, Plugin, Query, Res, ResMut, Transform, With, info}, render2::camera::Camera, window::Windows};
+use bevy::{core::Time, input::{mouse::MouseMotion, Input}, math::{EulerRot, Quat, Vec2, Vec3}, prelude::{Added, EventReader, KeyCode, MouseButton, Plugin, Query, Res, ResMut, Transform, With}, render2::camera::Camera, window::Windows};
 pub struct CameraControllerPlugin;
 
 impl Plugin for CameraControllerPlugin {
@@ -44,7 +44,7 @@ impl Default for CameraController {
             mouse_look: MouseButton::Right,
             walk_speed: 10.0,
             run_speed: 30.0,
-            friction: 0.1,
+            friction: 0.3,
             pitch: None,
             yaw: None,
             velocity: Vec3::ZERO,
@@ -56,6 +56,7 @@ impl Default for CameraController {
     }
 }
 
+#[allow(clippy::type_complexity)]
 fn init_camera_controller(
     mut query: Query<
         (&Transform, &mut CameraController),
@@ -155,7 +156,7 @@ fn update_camera_controller(
             );
 
             let target = Quat::from_euler(EulerRot::ZYX, 0.0, yaw, pitch);
-            transform.rotation = transform.rotation.slerp(target, 0.5);
+            transform.rotation = transform.rotation.lerp(target, 0.5);
 
             options.pitch = Some(pitch);
             options.yaw = Some(yaw);

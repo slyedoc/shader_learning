@@ -1,29 +1,44 @@
+#![allow(clippy::type_complexity)]
+
+mod config;
+mod camera_controller;
+mod scene;
+mod shapes;
+
 use bevy::{
     app::AppExit,
-    diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
     prelude::*,
-    PipelinedDefaultPlugins,
+    PipelinedDefaultPlugins, diagnostic::{LogDiagnosticsPlugin, FrameTimeDiagnosticsPlugin},
 };
-use bevy_inspector_egui::{ WorldInspectorParams, WorldInspectorPlugin};
-use prelude::CameraControllerPlugin;
 
-#[allow(clippy::type_complexity)]
-pub mod camera_controller;
+use bevy_inspector_egui::{ WorldInspectorParams, WorldInspectorPlugin};
+use camera_controller::CameraControllerPlugin;
+use config::ConfigPlugin;
+use shapes::ShapePlugin;
 
 pub mod prelude {
-    pub use crate::{camera_controller::*, AppEnvironmentPlugin};
+    pub use crate::{camera_controller::*, scene::*, shapes::*, StandardEnviromentPlugin};
 }
 
-pub struct AppEnvironmentPlugin;
+pub struct StandardEnviromentPlugin;
 
-impl Plugin for AppEnvironmentPlugin {
+impl Plugin for StandardEnviromentPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(PipelinedDefaultPlugins)
+        app.insert_resource(Msaa { samples: 4 })
+            .insert_resource(WindowDescriptor {
+                title: "Shader".to_string(),
+                vsync: false, // disable to break 60 fps
+                ..Default::default()
+            })
+            .add_plugins(PipelinedDefaultPlugins)
             .add_plugin(WorldInspectorPlugin::default())
             .add_plugin(CameraControllerPlugin)
-            //.add_plugin(FrameTimeDiagnosticsPlugin::default())
-            //.add_plugin(LogDiagnosticsPlugin::default())
+            .add_plugin(ConfigPlugin)
+            .add_plugin(ShapePlugin)
+            .add_plugin(FrameTimeDiagnosticsPlugin::default())
+            .add_plugin(LogDiagnosticsPlugin::default())
             .add_system(control_system);
+
     }
 
     fn name(&self) -> &str {

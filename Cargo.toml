@@ -6,16 +6,16 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = { version = "0.5" }
-bevy-inspector-egui = "0.6.1"
-bevy_egui = "0.7.1"
-rand = "0.8"
-
-[dev-dependencies]
-crevice = { path = "../bevy/crates/crevice", version = "0.8.0", features = ["glam"] }
-
-[patch.crates-io]
-#bevy = { path = "../bevy" }
-bevy = { git = "https://github.com/bevyengine/bevy",  branch = "pipelined-rendering"}
+# bevy = { git = 'https://github.com/bevyengine/bevy.git', branch = "pipelined-rendering" }
+ bevy = { git = "https://github.com/bevyengine/bevy", branch = "pipelined-rendering", default-features = false,    features = [
+     "bevy_render2",
+     "bevy_winit",
+     "bevy_core_pipeline"
+ ]}
 bevy-inspector-egui = { git = "https://github.com/jakobhellermann/bevy-inspector-egui", branch = "bevy-pipelined" }
 bevy_egui = { git = "https://github.com/jakobhellermann/bevy_egui", branch = "bevy-pipelined" }
+ron = "0.7.0"
+hexasphere = "6.0.0"
+rand = "0.8"
+serde = { version = "1.0.130", features = ["serde_derive"] }
+crevice = { path = "../bevy/crates/crevice", version = "0.8.0", features = ["glam"] }

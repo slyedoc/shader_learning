@@ -18,7 +18,7 @@ use shader_learning::prelude::*;
 
 fn main() {
     App::new()
-        .add_plugin(AppEnvironmentPlugin)
+        .add_plugin(StandardEnviromentPlugin)
         .add_startup_system(setup)
         .add_system(movement)
         .add_system(animate_light_direction)

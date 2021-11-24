@@ -32,7 +32,7 @@ use shader_learning::prelude::*;
 
 fn main() {
     App::new()
-        .add_plugin(AppEnvironmentPlugin)
+        .add_plugin(StandardEnviromentPlugin)
         .add_startup_system(setup)
         .add_plugin(CustomMaterialPlugin)
         .run();
@@ -149,6 +149,9 @@ impl SpecializedPipeline for CustomPipeline {
 impl FromWorld for CustomPipeline {
     fn from_world(world: &mut World) -> Self {
         let asset_server = world.get_resource::<AssetServer>().unwrap();
+        // Watch for changes
+        asset_server.watch_for_changes().unwrap();
+        
         let render_device = world.get_resource::<RenderDevice>().unwrap();
         let material_layout = render_device.create_bind_group_layout(&BindGroupLayoutDescriptor {
             entries: &[BindGroupLayoutEntry {
@@ -172,6 +175,7 @@ impl FromWorld for CustomPipeline {
     }
 }
 
+#[allow(clippy::type_complexity)]
 #[allow(clippy::too_many_arguments)]
 pub fn queue_custom(
     transparent_3d_draw_functions: Res<DrawFunctions<Transparent3d>>,
