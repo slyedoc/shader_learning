@@ -2,20 +2,15 @@
 name = "shader_learning"
 version = "0.1.0"
 edition = "2021"
+resolver = "2"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["lib"]
 
 [dependencies]
-# bevy = { git = 'https://github.com/bevyengine/bevy.git', branch = "pipelined-rendering" }
- bevy = { git = "https://github.com/bevyengine/bevy", branch = "pipelined-rendering", default-features = false,    features = [
-     "bevy_render2",
-     "bevy_winit",
-     "bevy_core_pipeline"
- ]}
-bevy-inspector-egui = { git = "https://github.com/jakobhellermann/bevy-inspector-egui", branch = "bevy-pipelined" }
-bevy_egui = { git = "https://github.com/jakobhellermann/bevy_egui", branch = "bevy-pipelined" }
-ron = "0.7.0"
-hexasphere = "6.0.0"
-rand = "0.8"
-serde = { version = "1.0.130", features = ["serde_derive"] }
-crevice = { path = "../bevy/crates/crevice", version = "0.8.0", features = ["glam"] }
+#bevy =  { version = "0.7.0" }
+#bevy = { git = "https://github.com/bevyengine/bevy", branch = "main" }
+bevy = { path = "../bevy" }
+#bevy_slyedoc_bvh = { git = "https://github.com/slyedoc/bevy_slyedoc_bvh" }
+rand = "0.8.5"
+rand_chacha = "0.3.1"
